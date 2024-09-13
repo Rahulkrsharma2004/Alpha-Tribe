@@ -9,6 +9,7 @@ const createPost = async (req, res) => {
       title,
       description,
       tags,
+      // username:req.username,
       user: req.user.id,
     });
     const post = await newPost.save();
@@ -54,8 +55,8 @@ const deletePost = async (req, res) => {
     if (post.user.toString() !== req.user.id) {
       return res.status(401).json({ msg: 'User not authorized' });
     }
-    await post.remove();
-    res.json({ msg: 'Post removed' });
+    await Post.deleteOne({ _id: req.params.id });
+    res.json({ msg: 'Post Deleted Successfully' });
   } catch (err) {
     console.error(err.message);
     if (err.kind === 'ObjectId') {

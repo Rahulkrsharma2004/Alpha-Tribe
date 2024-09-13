@@ -9,7 +9,7 @@ const addComment = async (req, res) => {
       comment,
     });
     const commentDoc = await newComment.save();
-    res.json(commentDoc);
+    res.json({message:"Comment Succesfully",comments:commentDoc});
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
@@ -25,7 +25,7 @@ const deleteComment = async (req, res) => {
     if (comment.user.toString() !== req.user.id) {
       return res.status(401).json({ msg: 'User not authorized' });
     }
-    await comment.remove();
+    await comment.deleteOne({_id:req.param.id});
     res.json({ msg: 'Comment removed' });
   } catch (err) {
     console.error(err.message);

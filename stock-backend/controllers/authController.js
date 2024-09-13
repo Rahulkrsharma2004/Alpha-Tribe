@@ -1,6 +1,9 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
+
+
+
 const register = async (req, res) => {
   const { username, email, password } = req.body;
   try {
@@ -38,6 +41,9 @@ const register = async (req, res) => {
     res.status(500).send("Server error");
   }
 };
+
+
+
 const login = async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -68,4 +74,7 @@ const login = async (req, res) => {
     res.status(500).send("Server error");
   }
 };
-module.exports = { register, login };
+
+// const logout = async ()
+
+module.exports = { register, login};
