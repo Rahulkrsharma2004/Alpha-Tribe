@@ -80,6 +80,7 @@ const logout =  (req,res) =>{
   // console.log("logout")
   res.clearCookie('token')
   res.json({message: 'Logged out successfully'})
+  // console.log("logout")
 }
 
 module.exports = { register, login ,logout };
