@@ -2,8 +2,6 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
-
-
 const register = async (req, res) => {
   const { username, email, password } = req.body;
   try {
@@ -30,6 +28,7 @@ const register = async (req, res) => {
       { expiresIn: 3600 },
       (err, token) => {
         if (err) throw err;
+        res.cookie("token", token, { httpOnly: true });
         res.json({
           message: "Register successfully",
           token: token,
@@ -41,8 +40,6 @@ const register = async (req, res) => {
     res.status(500).send("Server error");
   }
 };
-
-
 
 const login = async (req, res) => {
   const { email, password } = req.body;
@@ -66,7 +63,11 @@ const login = async (req, res) => {
       { expiresIn: 3600 },
       (err, token) => {
         if (err) throw err;
-        res.json({ message: "Login Successful", Token: token });
+        res.cookie('token',token,{httpOnly:true})
+        res.json({
+          message: "Login Successful",
+          Token: token,
+        });
       }
     );
   } catch (err) {
@@ -75,6 +76,10 @@ const login = async (req, res) => {
   }
 };
 
-// const logout = async ()
+const logout =  (req,res) =>{
+  // console.log("logout")
+  res.clearCookie('token')
+  res.json({message: 'Logged out successfully'})
+}
 
-module.exports = { register, login};
+module.exports = { register, login ,logout };

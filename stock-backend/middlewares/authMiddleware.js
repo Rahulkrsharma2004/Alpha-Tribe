@@ -1,9 +1,11 @@
 const jwt = require('jsonwebtoken');
 
 module.exports = function (req, res, next) {
-  const authHeader = req.header('Authorization');
-  const token = authHeader && authHeader.split(' ')[1];
   
+  // const authHeader = req.header('Authorization');
+  // const token = authHeader && authHeader.split(' ')[1];
+  
+  const token = req.cookies.token
   console.log("Token received:", token);
 
   if (!token) {
